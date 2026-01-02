@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>User Registration</title>
+<style>
+body{font-family:Arial;background:#f4f4f4}
+form{background:#fff;padding:20px;width:300px;margin:50px auto;border-radius:8px}
+input,button{width:100%;padding:8px;margin:6px 0}
+button{background:#4CAF50;color:#fff;border:none}
+</style>
+</head>
+<body>
+<form id="regForm">
+<h3>User Registration</h3>
+<input name="fullName" placeholder="Full Name" required>
+<input name="username" placeholder="Username" required>
+<input name="email" placeholder="Email" required>
+<input name="phoneNumber" placeholder="Phone Number" required>
+<input type="password" name="password" placeholder="Password" required>
+<input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+<button>Register</button>
+<p id="msg"></p>
+</form>
+<script>
+document.getElementById("regForm").onsubmit=async(e)=>{
+e.preventDefault();
+const f=e.target;
+const data=Object.fromEntries(new FormData(f));
+const res=await fetch("/api/auth/register",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify(data)
+});
+const r=await res.json();
+document.getElementById("msg").innerText=r.message||"Error";
+};
+</script>
+</body>
+</html>
